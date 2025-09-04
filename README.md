@@ -12,4 +12,7 @@ but still available for experimentation.
 This version includes teaching a robot using 2 hands concurrently. 
 Required libraries Eigen3, OpenCV, Boost, PCL.
 
+Build using CMake. 
+Use of PugiXML software for xml file processing. 
+
 The source code is available with a GPLv3 licence.
