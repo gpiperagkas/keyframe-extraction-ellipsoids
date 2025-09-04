@@ -10,5 +10,6 @@ The repository provides an experimental version of the source code, with multipl
 but still available for experimentation. 
 
 This version includes teaching a robot using 2 hands concurrently. 
+Required libraries Eigen3, OpenCV, Boost, PCL.
 
 The source code is available with a GPLv3 licence.
