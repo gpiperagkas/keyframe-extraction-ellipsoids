@@ -498,7 +498,6 @@ void eventchain::buildInitChain()
         finst.at(0) = sequence.at(ns-1)->finstate.at(0);
         finst.at(1) = sequence.at(ns-1)->finstate.at(1);
         finst.at(2) = sequence.at(ns-1)->finstate.at(2);
-cout << "eoeoeoeoeoeoe" <<endl;
         cout << "finstate: "<< sequence.at(ns-1)->finstate.at(0) << " "<<
                                sequence.at(ns-1)->finstate.at(1) << " "<<
                                 sequence.at(ns-1)->finstate.at(2)<<endl;
@@ -525,7 +524,6 @@ cout << "eoeoeoeoeoeoe" <<endl;
         // Once all work has been completed (thread_func invoked ls1 times), the
         // threads in the threadpool will be completed and can be joined.
         threadpool.join_all();
-        std::cout << "calcNORMHINTS 0000" <<std::endl;
 
         boost::asio::io_service ioService2;
 
@@ -539,13 +537,10 @@ cout << "eoeoeoeoeoeoe" <<endl;
               &boost::asio::io_service::run, &ioService2));
         }
         threadpool2.join_all();
-std::cout << "calcNORMHINTS 1" <<std::endl;
         boost::asio::io_service ioService3;
-        std::cout << "calcNORMHINTS 2" <<std::endl;
 
         for (unsigned int ll=0; ll< sequence.size();ll++)
             ioService3.post(boost::bind( &imagergb::calcNormHints, sequence.at(ll)));
-        std::cout << "calcNORMHINTS 3" <<std::endl;
 
         boost::thread_group threadpool3;
         for (unsigned int il = 0; il < NTHREADS; il++)
@@ -553,10 +548,8 @@ std::cout << "calcNORMHINTS 1" <<std::endl;
           threadpool3.create_thread(boost::bind(
               &boost::asio::io_service::run, &ioService3));
         }
-        std::cout << "calcNORMHINTS 4" <<std::endl;
 
         threadpool3.join_all();
-        std::cout << "calcNORMHINTS 5" <<std::endl;
 
         //END PARALLELIZATIN OF IMAGE SCANNING
 
@@ -637,10 +630,6 @@ std::cout << "calcNORMHINTS 1" <<std::endl;
                 //mode 2: minor axis parallel
                 //mode 3: all axes parallel
                 sequence.at(ll)->ElliAngles(0, finst);
-//                cout << "FRAME: "<<ll<<" PARstate: "<< sequence.at(ll)->parstate.at(0) << " "<<
-//                                       sequence.at(ll)->parstate.at(1) << " "<<
-//                                       sequence.at(ll)->parstate.at(2) << endl;
-
 
                 if (sequence.at(ll)->parstate.at(0) != -1)
                 {
@@ -878,7 +867,6 @@ void eventchain::extractKeyframes()
     for (i=0;i<nini;i++)
         cout << keyframeflag[i] << " ";
     cout << endl;
-    cout << keyn <<" keyframes out of total "<< nini << endl;
 }
 
 void eventchain::derivativeSEC() //construct derivative of SEC
@@ -933,10 +921,6 @@ void eventchain::constructCSEC() //construct compressed SEC based on x and y coo
 
     }
 
-//   for (unsigned int i=0; i<x.size(); i++)
-//   {
-//       cout << x.at(i) << " " << y.at(i) << endl;
-//   }
     cout << "size of ksi: " << ksi1.size()<<endl;
     for (unsigned int ll=0;ll<ksi1.size();ll++)
     {
@@ -1435,7 +1419,7 @@ void eventchain::extractVideo()
     outputVideo.open("/home/gpiperagkas/SARAFun_kf/00_outputvideo.avi",CV_FOURCC('M','J','P','G'), 10 ,Size(inframe.cols,inframe.rows) , true);
 
     if (!outputVideo.isOpened())
-        cout << "ERROR VIDEO IS NOT OPENED FOR WRITING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+        cout << "ERROR VIDEO IS NOT OPENED FOR WRITING!" << endl;
 
     int *ifrg;
     ifrg = new int[inframe.rows*inframe.cols];
