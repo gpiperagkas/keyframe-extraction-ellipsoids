@@ -369,14 +369,6 @@ void imagergb::setSegRelations()
             }
         }
 
-  //      cout << ct[0] << endl;
-
-//        for (j=0;j<changes;j++)
-//        {
-//            cout << hlist[j] << " ";
-//        }
-//        cout << endl;
-
 
         //now overlapping for horizontal
 
@@ -617,9 +609,7 @@ void imagergb::calcNormHints() //calculate normalized hint counters for overlapp
                 }
 
             }
-//            cout << normct[i*sc+j] << " ";
         }
-//         cout <<endl;
     }
 }
 
@@ -652,17 +642,11 @@ void imagergb::ElliMargin(int imar)
     {
         checkval = ((C1 - C2).transpose()*Q2*(C1 - C2)) - 1;
 
-//        if (checkval<0)
-//            return -100;
-
         C=(Q2.sqrt()).inverse()*Q1*(Q2.sqrt()).inverse();
         c=Q2.sqrt()*(C1-C2);
     }else if (imar==2)
     {
         checkval = ((C2 - C1).transpose()*Q1*(C2 - C1)) - 1;
-
-//        if (checkval<0)
-//            return -100;
 
         C=(Q1.sqrt()).inverse()*Q2*(Q1.sqrt()).inverse();
         c=Q1.sqrt()*(C2-C1);
@@ -670,12 +654,9 @@ void imagergb::ElliMargin(int imar)
     b = C*c;
    // b=(Q2.sqrt()).inverse()*Q1*(C1-C2);
 
-//    cout << "C: "<< C <<endl;
-//    cout << "b: "<< b <<endl;
 
     bbt = -(b*b.transpose());
     I = MatrixXd::Identity(3,3);
-//    cout << "I: " << I << endl;
 
     eigall.resize(6,6);
     for (int ii=0;ii<6;ii++)
@@ -704,33 +685,19 @@ void imagergb::ElliMargin(int imar)
                 mineig=ll.real();
         }
     }
-//    cout << "mineig: " << mineig <<endl;
     xx= C-(mineig*I);
     xstar = xx.inverse()*b;
     if (imar==1)
     {
         xstarr1 = (Q2.sqrt()).inverse()*xstar + C2;
-        //cout<< "x1= "<< xstarr1 <<endl;
-        //    cout << "xstar: " <<xstar <<endl;
-        //    cout << "C1:" <<C1 << endl;
-        //    cout << "C2:" <<C2 << endl;
         marr = (((xstarr1 - C1).transpose()*Q1*(xstarr1 - C1)) -1);
         xstarrr = xstarr1 - C1;
     }else if (imar==2)
     {
         xstarr2 = (Q1.sqrt()).inverse()*xstar + C1;
-        //cout<< "x2= "<< xstarr2 <<endl;
-
-        //    cout << "xstar: " <<xstar <<endl;
-        //    cout << "C1:" <<C1 << endl;
-        //    cout << "C2:" <<C2 << endl;
         //marr = (((xstarr2 - C2).transpose()*Q2*(xstarr2 - C2)) -1);
         xstarrr = xstarr2 - C2;
     }
-    //cout << "frame: "<<im<<" MARGIN_"<<imar<<": "<< mar << endl;
-//    if (mar<0)
-//        cout << "dist to C1: "<<xstarrr << endl;
-
 }
 
 void imagergb::ElliAxon()
@@ -1046,7 +1013,6 @@ void imagergb::ElliAngles(int mode, std::vector<int> finst)
                             (ax2r(2,maxind2)*ax2r(2,maxind2)));
 
             dot = (ax1r(0,maxind1)*ax2r(0,maxind2)) + (ax1r(1,maxind1)*ax2r(1,maxind2)) + (ax1r(2,maxind1)*ax2r(2,maxind2));
-           // cout << "ANGLE: "<< (std::abs(dot/(val1*val2))) <<endl;
             cout << "maj degrees: "<< (180/3.14)*std::acos(std::abs(dot/(val1*val2))) <<endl;
             switch (chk)
             {
@@ -1095,7 +1061,6 @@ void imagergb::ElliAngles(int mode, std::vector<int> finst)
                             (ax2r(2,medind2)*ax2r(2,medind2)));
 
             dot = (ax1r(0,medind1)*ax2r(0,medind2)) + (ax1r(1,medind1)*ax2r(1,medind2)) + (ax1r(2,medind1)*ax2r(2,medind2));
-            //cout << "MED ANGLE: "<< std::abs(dot/(val1*val2))<<endl;
            cout << "med degrees: "<< (180/3.14)*std::acos(std::abs(dot/(val1*val2))) <<endl;
             switch (chk)
             {
@@ -1146,7 +1111,6 @@ void imagergb::ElliAngles(int mode, std::vector<int> finst)
 
             dot = (ax1r(0,minind1)*ax2r(0,minind2)) + (ax1r(1,minind1)*ax2r(1,minind2)) + (ax1r(2,minind1)*ax2r(2,minind2));
 
-            //cout << "MIN ANGLE: " << std::abs(dot/(val1*val2)) <<endl;
             cout << "min degrees: "<< (180/3.14)*std::acos(std::abs(dot/(val1*val2))) <<endl;
 
             switch (chk)
@@ -1196,27 +1160,7 @@ void imagergb::ElliAngles(int mode, std::vector<int> finst)
 
 void imagergb::printhints()
 {
-//    for (i=0;i<sc;i++)
-//    {
-//        for (j=0;j<sc;j++)
-//        {
-//            cout << ct[i*sc+j] << " ";
-//        }
-//        cout << endl;
-//    }
-//    cout << endl;
 
-//    for (i=0;i<sc;i++)
-//    {
-//        for (j=0;j<sc;j++)
-//        {
-//            cout << co[i*sc+j] << " ";
-//        }
-//        cout << endl;
-//    }
-//    cout << endl;
-
-    cout << "normct"<<endl;
     for (i=0;i<sc;i++)
     {
         for (j=0;j<sc;j++)
