@@ -12,6 +12,8 @@ but still available for experimentation.
 This version includes teaching a robot using 2 hands concurrently. 
 Required libraries Eigen3, OpenCV, Boost, PCL.
 
+Requires the 2D masks from analysis of objects as prerequisite. Not available with the source code.
+
 Build using CMake. 
 Use of PugiXML software for xml file processing. 
 
