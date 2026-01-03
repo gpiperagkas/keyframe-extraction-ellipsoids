@@ -189,63 +189,6 @@ void ellipsoid::DRNcore()
         threadpool.join_all();
 
 
-//        boost::asio::io_service ioService;
-//        boost::thread_group threadpool;
-
-
-//        /*
-//         * This will start the ioService processing loop. All tasks
-//         * assigned with ioService.post() will start executing.
-//         */
-//        boost::asio::io_service::work work(ioService);
-
-//        /*
-//         * This will add 2 threads to the thread pool. (You could just put it in a for loop)
-//         */
-//        for (int il=0;il<NTHREADS;il++)
-//            threadpool.create_thread(
-//                boost::bind(&boost::asio::io_service::run, &ioService)
-//                );
-
-
-//        /*
-//         * This will assign tasks to the thread pool.
-//         * More about boost::bind: "http://www.boost.org/doc/libs/1_54_0/libs/bind/bind.html#with_functions"
-//         */
-
-//        for (i=0;i<m;i++)
-//        {
-//            for (j=0;j<N;j++)
-//                ai(j)=A(j,i);
-//            ioService.post(boost::bind( &ellipsoid::threaded_h, this, i, ai));
-//        }
-//        /*
-//         * This will stop the ioService processing loop. Any tasks
-//         * you add behind this point will not execute.
-//        */
-//        ioService.stop();
-
-//        /*
-//         * Will wait till all the treads in the thread pool are finished with
-//         * their assigned tasks and 'join' them. Just assume the threads inside
-//         * the threadpool will be destroyed by this method.
-//         */
-//        threadpool.join_all();
-
-
-
-        //boost multi-threading start
-//        boost::thread_group gi;
-
-//        for (i=0;i<m;i++)
-//        {
-//            for (j=0;j<N;j++)
-//                ai(j)=A(j,i);
-//            gi.create_thread( boost::bind( &ellipsoid::threaded_h, this, i, ai) );
-//        }
-
-//        gi.join_all();
-        //multi-threading end
 
         //compute hu here
         //		for (i=0;i<m;i++)
@@ -270,7 +213,6 @@ void ellipsoid::DRNgetDirection()
 	U= u.asDiagonal();
 	T= t.asDiagonal();
 
- //   cout << u << endl;
 	//compute M^-2
 	M_2= 2*(A*U*A.transpose() - (1/(e.transpose()*u))*A*u*u.transpose()*A.transpose());
 	//compute M
@@ -312,65 +254,6 @@ void ellipsoid::DRNinit()
 	double alpha;
     u=(N/double(2*m))*e;
 	U= u.asDiagonal();
-
-    //boost multi-threading start
-//    boost::thread_group g;
-
-//    for (i=0;i<m;i++)
-//    {
-//        for (j=0;j<N;j++)
-//            ai(j)=A(j,i);
-//        g.create_thread( boost::bind( &ellipsoid::threaded_h,this, i, ai) );
-//    }
-
-//    g.join_all();
-
-//    //CREATE THREADPOOL FOR PARALLEL COMPUTATION OF H
-//    /*
-//     * Create an asio::io_service and a thread_group (through pool in essence)
-//     */
-//    boost::asio::io_service ioService;
-//    boost::thread_group threadpool;
-
-
-//    /*
-//     * This will start the ioService processing loop. All tasks
-//     * assigned with ioService.post() will start executing.
-//     */
-//    boost::asio::io_service::work work(ioService);
-
-//    /*
-//     * This will add 2 threads to the thread pool. (You could just put it in a for loop)
-//     */
-//    for (int il=0;il<NTHREADS;il++)
-//        threadpool.create_thread(
-//            boost::bind(&boost::asio::io_service::run, &ioService)
-//            );
-
-
-//    /*
-//     * This will assign tasks to the thread pool.
-//     * More about boost::bind: "http://www.boost.org/doc/libs/1_54_0/libs/bind/bind.html#with_functions"
-//     */
-
-//    for (i=0;i<m;i++)
-//    {
-//        for (j=0;j<N;j++)
-//            ai(j)=A(j,i);
-//        ioService.post(boost::bind( &ellipsoid::threaded_h, this, i, ai));
-//    }
-//    /*
-//     * This will stop the ioService processing loop. Any tasks
-//     * you add behind this point will not execute.
-//    */
-//    ioService.stop();
-
-//    /*
-//     * Will wait till all the treads in the thread pool are finished with
-//     * their assigned tasks and 'join' them. Just assume the threads inside
-//     * the threadpool will be destroyed by this method.
-//     */
-//    threadpool.join_all();
 
     boost::asio::io_service ioService;
 
@@ -428,44 +311,6 @@ void ellipsoid::DRNinit()
 
 		u=alpha*u;
 		U= u.asDiagonal();
-
-
-        //boost multi-threading start
-//        boost::thread_group g1;
-
-//        for (i=0;i<m;i++)
-//        {
-//            for (j=0;j<N;j++)
-//                ai(j)=A(j,i);
-//            g1.create_thread( boost::bind( &ellipsoid::threaded_h,this, i, ai) );
-//        }
-
-//        g1.join_all();
-
-        //CREATE THREADPOOL FOR PARALLEL COMPUTATION OF H
-        /*
-         * Create an asio::io_service and a thread_group (through pool in essence)
-         */
-//        boost::asio::io_service ioService;
-//        boost::thread_group threadpool;
-
-//        boost::asio::io_service::work work(ioService);
-
-//        for (int il=0;il<NTHREADS;il++)
-//            threadpool.create_thread(
-//                boost::bind(&boost::asio::io_service::run, &ioService)
-//                );
-
-//        for (i=0;i<m;i++)
-//        {
-//            for (j=0;j<N;j++)
-//                ai(j)=A(j,i);
-//            ioService.post(boost::bind( &ellipsoid::threaded_h, this, i, ai));
-//        }
-
-//        ioService.stop();
-
-//        threadpool.join_all();
 
         boost::asio::io_service ioService;
 
@@ -602,8 +447,6 @@ void ellipsoid::rotateQ(std::vector<float> ypr)
     g=ypr.at(0);
     b=ypr.at(1);
     a=ypr.at(2);
-
-//    std::cout << a << " " << b << " " << g << std::endl;
 
     Rx(0,0) = 1; Rx(0,1) = 0; Rx(0,2) = 0;
     Rx(1,0) = 0; Rx(1,1) = cos(g); Rx(1,2) = -sin(g);
